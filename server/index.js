@@ -9,7 +9,7 @@ const server = net.createServer((socket) => {
   socket.on('data', (data) => {
     const result = data.toString().trim();
 
-    if (result === 'World') {
+    if (/World/i.test(result)) {
       console.log('Hello World');
     }
   });

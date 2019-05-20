@@ -9,7 +9,7 @@ socket.connect({ host: '127.0.0.1', port: 8080 }, () => {
 socket.on('data', (data) => {
   const result = data.toString().trim();
 
-  if (result === 'Hello') {
+  if (/Hello/i.test(result)) {
     socket.write('World');
   }
 });
