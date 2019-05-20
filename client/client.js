@@ -23,5 +23,10 @@ process.stdin.on('end', () => {
 
 process.stdin.on('data', (data) => {
   const result = data.toString().trim();
-  socket.write(result);
+
+  if (/end/i.test(result)) {
+    socket.end('end');
+  } else {
+    socket.write(result);
+  }
 });

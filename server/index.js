@@ -1,7 +1,9 @@
 const net = require('net');
 
+const socketTable = [];
 const server = net.createServer((socket) => {
   console.log('client connected');
+  socketTable.push(socket);
   // setInterval(() => {
   //   socket.write('Hello');
   // }, 5000);
@@ -11,6 +13,11 @@ const server = net.createServer((socket) => {
 
     if (/Hello/i.test(result)) {
       process.stdout.write('World\n');
+    } else if (result === 'end' && socketTable !== 0) {
+      socketTable.pop();
+      if (socketTable.length === 0) {
+        server.close();
+      }
     }
   });
 });
