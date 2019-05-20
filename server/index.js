@@ -1,6 +1,8 @@
+/* eslint-disable no-restricted-syntax */
 const net = require('net');
 
 const socketTable = [];
+const clients = {};
 const server = net.createServer((socket) => {
   console.log('client connected');
   socketTable.push(socket);
@@ -19,9 +21,20 @@ const server = net.createServer((socket) => {
         server.close();
       }
     } else {
-      socketTable.filter(elem => socket !== elem).forEach((element) => {
-        element.write(result);
-      });
+      // socketTable.filter(elem => socket !== elem).forEach((element) => {
+      //   element.write(result);
+      // });
+
+      // eslint-disable-next-line guard-for-in
+      for (const key in clients) {
+        const obj = {
+          id: socket.remotePort,
+          message: result,
+        };
+        if (clients[key] !== socket) {
+          clients[key].write(JSON.stringify(obj));
+        }
+      }
     }
   });
 });
@@ -30,4 +43,8 @@ server.listen({
   host: '127.0.0.1',
   port: 8080,
   exclusive: true,
+});
+
+server.on('connection', (socket) => {
+  clients[socket.remotePort] = socket;
 });

@@ -7,6 +7,7 @@ socket.connect({ host: '127.0.0.1', port: 8080 }, () => {
   console.log('Connected to server');
 });
 
+// const id = socket.remotePort;
 process.stdin.setEncoding('utf8');
 
 // process.stdin.on('readable', () => {
@@ -25,13 +26,13 @@ process.stdin.on('data', (data) => {
   const result = data.toString().trim();
 
   if (/end/i.test(result)) {
-    socket.end('end');
+    socket.end(result);
   } else {
     socket.write(result);
   }
 });
 
 socket.on('data', (data) => {
-  const result = data.toString().trim();
-  process.stdout.write(`${result}\n`);
+  const result = JSON.parse(data);
+  process.stdout.write(`${result.id}: ${result.message}\n`);
 });
