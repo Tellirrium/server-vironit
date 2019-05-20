@@ -1,16 +1,18 @@
 const net = require('net');
 
-const server = net.createServer((client) => {
+const server = net.createServer((socket) => {
   console.log('client connected');
   setInterval(() => {
-    client.write('Hello');
+    socket.write('Hello');
   }, 5000);
-  // client.on('data', (data) => {
-  //   const result = data.toString();
-  //   if (result === 'Hello') {
-  //     client.write('World');
-  //   }
-  // });
+
+  socket.on('data', (data) => {
+    const result = data.toString().trim();
+
+    if (result === 'World') {
+      console.log('Hello World');
+    }
+  });
 });
 
 server.listen({
