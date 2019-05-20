@@ -30,3 +30,8 @@ process.stdin.on('data', (data) => {
     socket.write(result);
   }
 });
+
+socket.on('data', (data) => {
+  const result = data.toString().trim();
+  process.stdout.write(`${result}\n`);
+});

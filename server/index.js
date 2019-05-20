@@ -18,6 +18,10 @@ const server = net.createServer((socket) => {
       if (socketTable.length === 0) {
         server.close();
       }
+    } else {
+      socketTable.filter(elem => socket !== elem).forEach((element) => {
+        element.write(result);
+      });
     }
   });
 });
