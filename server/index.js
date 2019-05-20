@@ -11,7 +11,7 @@ const server = net.createServer((socket) => {
   socket.on('data', (data) => {
     const result = data.toString().trim();
 
-    if (/Hello/i.test(result)) {
+    if (/^Hello$/ig.test(result)) {
       process.stdout.write('World\n');
     } else if (result === 'end' && socketTable !== 0) {
       socketTable.pop();
