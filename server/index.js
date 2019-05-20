@@ -2,15 +2,15 @@ const net = require('net');
 
 const server = net.createServer((socket) => {
   console.log('client connected');
-  setInterval(() => {
-    socket.write('Hello');
-  }, 5000);
+  // setInterval(() => {
+  //   socket.write('Hello');
+  // }, 5000);
 
   socket.on('data', (data) => {
     const result = data.toString().trim();
 
-    if (/World/i.test(result)) {
-      console.log('Hello World');
+    if (/Hello/i.test(result)) {
+      process.stdout.write('World\n');
     }
   });
 });
