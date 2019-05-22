@@ -34,5 +34,12 @@ process.stdin.on('data', (data) => {
 
 socket.on('data', (data) => {
   const result = JSON.parse(data);
-  process.stdout.write(`${result.id}: ${result.message}\n`);
+
+  if (Array.isArray(result)) {
+    process.stdout.write(`other users: ${result}\nPrivate message format is #22222 'some text'\n`);
+  } else if (typeof result === 'string') {
+    process.stdout.write(`${result}\n`);
+  } else {
+    process.stdout.write(`${result.id}: ${result.message}\n`);
+  }
 });
